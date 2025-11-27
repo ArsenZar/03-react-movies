@@ -2,19 +2,14 @@
 import './App.css'
 
 export default function App() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    
-    const formData = new FormData(form);
-    const username = formData.get("username");
-    console.log("Username:", username);
-
+  const handleSubmit = (formData: FormData) => {
+    const username = formData.get("username") as string;
+    console.log("Name:", username);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="username" />
+    <form action={handleSubmit}>
+      <input type="text" name="username" defaultValue="John Doe" />
       <button type="submit">Submit</button>
     </form>
   );
