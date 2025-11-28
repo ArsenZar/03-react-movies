@@ -7,13 +7,18 @@ export default function App() {
 
   useEffect(() => {
     console.log('Effect ran!');
-  }, [count]);
+    axios
+      // 1. Використовуємо count в ефекті
+      .get(`https://swapi.info/api/people/${count}`)
+      .then((response) => setPerson(response.data));
+  }, [count]); // 2. Додаємо count в залежності ефекта
 
   console.log('App rendered!');
 
   return (
     <>
-      <button onClick={() => setCount(count + 1)}>The count is {count}</button>
+      <h2>The count is {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Get next character</button>
       <pre>{JSON.stringify(person, null, 2)}</pre>
     </>
   );
