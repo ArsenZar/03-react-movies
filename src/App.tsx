@@ -2,12 +2,8 @@
 import axios from "axios";
 import SearchForm from "./components/SearchForm";
 import { useState } from "react";
-
-interface Article {
-  objectID: string;
-  title: string;
-  url: string;
-}
+import ArticleList from "./components/ArticleList";
+import type { Article } from "./types/article";
 
 interface ArticlesHttpResponse {
   hits: Article[];
@@ -28,15 +24,7 @@ export default function App() {
   return (
     <>
       <SearchForm onSubmit={handleSearch} />
-      {articles.length > 0 && (
-        <ul>
-          {articles.map(({ objectID, url, title }) => (
-            <li key={objectID}>
-              <a href={url} target="_blank">{title}</a>
-            </li>
-          ))}
-        </ul>
-      )}
+      {articles.length > 0 && <ArticleList items={articles} />}
     </>
   );
 }
