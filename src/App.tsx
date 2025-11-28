@@ -1,19 +1,20 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function App() {
   const [count, setCount] = useState(1);
   const [person, setPerson] = useState(null);
 
   useEffect(() => {
-    console.log('Effect ran!');
-    axios
-      // 1. Використовуємо count в ефекті
-      .get(`https://swapi.info/api/people/${count}`)
-      .then((response) => setPerson(response.data));
-  }, [count]); // 2. Додаємо count в залежності ефекта
+    // 1. Оголошуємо асинхронну функцію
+    async function fetchCharacter() {
+      const response = await axios.get(`https://swapi.info/api/people/${count}`);
+      setPerson(response.data);
+    }
 
-  console.log('App rendered!');
+    // 2. Викликаємо її одразу після оголошення
+    fetchCharacter();
+  }, [count]);
 
   return (
     <>
