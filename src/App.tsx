@@ -1,17 +1,17 @@
 // src/components/App.tsx
 
-import OrderForm from "./components/OrderForm";
+import SearchForm from "./components/SearchForm";
 
 export default function App() {
-  const handleOrder = (data: string) => {
-    console.log("Order received from:", data);
-    // можна зберегти замовлення, викликати API, показати повідомлення тощо
+
+  const handleSearch = async (topic: string) => {
+    // Тут будемо виконувати HTTP-запит
+    console.log(topic);
   };
 
   return (
     <>
-      <h1>Place your order</h1>
-      <OrderForm onSubmit={handleOrder} />
+      <SearchForm onSubmit={handleSearch} />
     </>
   );
 }
