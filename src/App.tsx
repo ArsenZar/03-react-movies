@@ -1,16 +1,17 @@
+// src/components/App.tsx
 
-import './App.css'
+import OrderForm from "./components/OrderForm";
 
 export default function App() {
-  const handleSubmit = (formData: FormData) => {
-    const username = formData.get("username") as string;
-    console.log("Name:", username);
+  const handleOrder = (data: string) => {
+    console.log("Order received from:", data);
+    // можна зберегти замовлення, викликати API, показати повідомлення тощо
   };
 
   return (
-    <form action={handleSubmit}>
-      <input type="text" name="username" defaultValue="John Doe" />
-      <button type="submit">Submit</button>
-    </form>
+    <>
+      <h1>Place your order</h1>
+      <OrderForm onSubmit={handleOrder} />
+    </>
   );
 }
