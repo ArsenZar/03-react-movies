@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
 
 export default function App() {
-  const [clicks, setClicks] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log("You can see me only once!");
-  }, []);
+    console.log(`Effect ran for: ${count}`);
+
+    // Повертаємо функцію очищення ефекта
+    return () => {
+      console.log(`Clean up for ${count}`);
+    };
+  }, [count]);
 
   return (
-    <button onClick={() => setClicks(clicks + 1)}>
-      You clicked {clicks} times
-    </button>
+    <>
+      <button onClick={() => setCount(count + 1)}>Count is {count}</button>
+    </>
   );
-};
+}
