@@ -13,16 +13,28 @@ export default function App() {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
 
 
   const handleSearch = async (topic: string) => {
-    // Тут будемо виконувати HTTP-запит
-    setIsLoading(true);
-    const response = await axios.get<ArticlesHttpResponse>(
-      `https://hn.algolia.com/api/v1/search?query=${topic}`
-    );
-    setIsLoading(false);
-    setArticles(response.data.hits); 
+    try {
+      // Тут будемо виконувати HTTP-запит
+      setIsLoading(true);
+      const response = await axios.get<ArticlesHttpResponse>(
+        `https://hn.algolia.com/api/v1/search?query=${topic}`
+      );
+      setIsLoading(false);
+      setArticles(response.data.hits);
+    } catch {
+      // 4. Встановлюємо стан isError в true
+      setIsError(true);
+    } finally {
+      // 5. Встановлюємо стан isLoading в false
+      // після будь якого результату запиту
+      setIsLoading(false);
+    }
+
   };
 
   return (
