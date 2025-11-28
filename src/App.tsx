@@ -7,10 +7,7 @@ export default function App() {
 
   useEffect(() => {
     console.log('Effect ran!');
-    axios
-      .get('https://swapi.info/api/people/1')
-      .then((response) => setPerson(response.data));
-  }, []); // Порожній масив залежностей
+  }, [count]);
 
   console.log('App rendered!');
 
