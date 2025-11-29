@@ -1,20 +1,11 @@
-import { useEffect, useState } from 'react';
+// src/components/App.tsx
+import Modal from "./components/Modal";
 
-export default function Timer() {
-  const [time, setTime] = useState(new Date());
-
-  useEffect(() => {
-    // 1. Зберігаєм ідентифікатор інтервалу в змінну
-    const intervalId = setInterval(() => {
-      setTime(new Date());
-      console.log(`Interval - ${Date.now()}`);
-    }, 1000);
-
-    return () => {
-      // 2. Видаляємо інтервал за його id
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  return <p>TimerBox - {time.toLocaleTimeString()}</p>;
+export default function App() {
+  return (
+    <div>
+      <h1>Main content of the page</h1>
+      <Modal />
+    </div>
+  );
 }
