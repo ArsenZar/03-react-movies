@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 
-export default function App() {
-  const [count, setCount] = useState(0);
+export default function Timer() {
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    console.log(`Effect ran for: ${count}`);
+    // 1. Зберігаєм ідентифікатор інтервалу в змінну
+    const intervalId = setInterval(() => {
+      setTime(new Date());
+      console.log(`Interval - ${Date.now()}`);
+    }, 1000);
 
-    // Повертаємо функцію очищення ефекта
     return () => {
-      console.log(`Clean up for ${count}`);
+      // 2. Видаляємо інтервал за його id
+      clearInterval(intervalId);
     };
-  }, [count]);
+  }, []);
 
-  return (
-    <>
-      <button onClick={() => setCount(count + 1)}>Count is {count}</button>
-    </>
-  );
+  return <p>TimerBox - {time.toLocaleTimeString()}</p>;
 }
