@@ -8,6 +8,8 @@ export default function App() {
 
   const closeModal = () => setIsModalOpen(false);
 
+  
+
   return (
     <div>
       <h1>Main content of the page</h1>
