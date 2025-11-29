@@ -1,31 +1,26 @@
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [clicks, setClicks] = useState(() => {
-    // Зчитуємо значення за ключем
-    const savedClicks = window.localStorage.getItem("saved-clicks");
+  const [clicks, setClicks] = useState(0);
 
-    // Якщо там щось є, повертаємо це 
-    // значення як початкове значення стану
-    if (savedClicks !== null) {
-      return JSON.parse(savedClicks);
-    }
-
-    // У протилежному випадку повертаємо 
-    // яке-небудь значення за замовчуванням
-    return 0;
-  });
-
+  // 1. Тільки один раз після монтування
   useEffect(() => {
-    localStorage.setItem("saved-clicks", JSON.stringify(clicks));
+    console.log("You can see me only once!");
+  }, []);
+
+  // 2. Кожного разу, коли змінюється clicks
+  useEffect(() => {
+    console.log("Clicks updated:", clicks);
   }, [clicks]);
 
+  // 3. При кожному рендері (бо без залежностей)
+  useEffect(() => {
+    document.title = `You clicked ${clicks} times`;
+  });
+
   return (
-    <div>
-      <button onClick={() => setClicks(clicks + 1)}>
-        You clicked {clicks} times
-      </button>
-      <button onClick={() => setClicks(0)}>Reset</button>
-    </div>
+    <button onClick={() => setClicks(clicks + 1)}>
+      You clicked {clicks} times
+    </button>
   );
 }
