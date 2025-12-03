@@ -22,7 +22,10 @@ export default function App() {
     setIsOpen(true);
     setSelectedMovie(param);
    };
-  const closeModal = () => { setIsOpen(false) };
+  const closeModal = () => {
+    setIsOpen(false);
+    setSelectedMovie(null);
+   };
 
   // function openPop(param: Movie) {
   //   console.log(param.id);
