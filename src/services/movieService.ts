@@ -8,7 +8,7 @@ interface MovieSearchResponse {
     total_results: number;
 }
 
-export default async function movieService(userQuery: string): Promise<Movie[]> {
+export default async function fetchMovies(userQuery: string): Promise<Movie[]> {
     
     const myKey = import.meta.env.VITE_TMDB_TOKEN;
 

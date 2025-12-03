@@ -1,27 +1,67 @@
 import SearchBar from "./components/SearchBar/SearchBar";
 import css from "./App.module.css";
-import movieService from "./services/movieService";
-import { useState, useEffect } from "react";
+import fetchMovies from "./services/movieService";
+import { useState } from "react";
 import type { Movie } from "./types/movie";
+import toast, { Toaster } from 'react-hot-toast';
+import MovieGrid from "./components/MovieGrid/MovieGrid";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import MovieModal from "./components/MovieModal/MovieModal";
 
 
 export default function App() {
 
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = (param: Movie) => {
+    setIsOpen(true);
+    setSelectedMovie(param);
+   };
+  const closeModal = () => { setIsOpen(false) };
+
+  // function openPop(param: Movie) {
+  //   console.log(param.id);
+  // }
   
   async function res(par: string) {
-    const resoult = await movieService(par);
-    setMovies(resoult);
+    try {
+      setMovies([]);
+      setIsLoading(true);
+      setIsError(false);
+
+      const resoult = await fetchMovies(par);
+    
+      if (resoult.length === 0) {
+        toast.error('No movies found for your request.');
+        return;
+      }
+    
+      setMovies(resoult);
+    } catch {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  useEffect(() => {
-    console.log("movies updated:", movies);
-  }, [movies]);
-
-
   return (
-    <div className={ css.app }>
-      <SearchBar onSubmit={res}/>
+    <div className={css.app}>
+      <Toaster />
+
+      <SearchBar onSubmit={res} />
+      {isLoading && (<Loader />)}
+      {isError && !isLoading && <ErrorMessage />}
+      {movies.length > 0 && (<MovieGrid onSelect={openModal} movies={movies} />)}
+
+      {selectedMovie != null && isOpen && (
+        <MovieModal movie={selectedMovie} onClose={closeModal} />
+      )}
+    
     </div>
   );
 }
