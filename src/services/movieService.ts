@@ -12,6 +12,9 @@ export default async function fetchMovies(userQuery: string): Promise<Movie[]> {
     
     const myKey = import.meta.env.VITE_TMDB_TOKEN;
 
+    if (!myKey) throw new Error("VITE_TMDB_TOKEN is missing!");
+    
+
     const options = {
         method: 'GET',
         url: 'https://api.themoviedb.org/3/search/movie',
@@ -29,8 +32,8 @@ export default async function fetchMovies(userQuery: string): Promise<Movie[]> {
     };
     
 
-    const responce = await axios.request<MovieSearchResponse>(options);
-    return responce.data.results;
+    const response = await axios.request<MovieSearchResponse>(options);
+    return response.data.results;
 
 }
 
