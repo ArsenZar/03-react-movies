@@ -3,12 +3,12 @@ import type { Movie } from "../../types/movie";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 
-interface MovieModalProp{
+interface MovieModalProps{
     movie: Movie,
     onClose: () => void;
 }
 
-export default function MovieModal({ movie, onClose }: MovieModalProp) { 
+export default function MovieModal({ movie, onClose }: MovieModalProps) { 
 
     const closeClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
